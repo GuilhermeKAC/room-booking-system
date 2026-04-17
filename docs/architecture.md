@@ -16,19 +16,38 @@
 
 ```
 com.roombooking/
-├── config/         # SecurityConfig, WebConfig
-├── controller/     # Endpoints REST
-├── service/        # Lógica de negócio
-├── repository/     # Acesso ao banco (Spring Data)
+├── config/
+│   ├── ApplicationConfig.java   # PasswordEncoder, AuthenticationProvider, AuthenticationManager
+│   └── SecurityConfig.java      # Filtros, rotas públicas, CSRF, sessão stateless
+├── controller/
+│   └── AuthController.java      # POST /api/auth/register, POST /api/auth/login, GET /api/auth/me
+├── service/
+│   └── UserService.java         # Registro de usuário, implementa UserDetailsService
+├── repository/
+│   ├── UserRepository.java
+│   ├── RoomRepository.java
+│   └── BookingRepository.java
 ├── model/
-│   ├── entity/     # Entidades JPA
-│   └── enums/      # UserRole, RoomStatus, BookingStatus
+│   ├── User.java
+│   ├── Room.java
+│   ├── Booking.java
+│   └── enums/
+│       ├── UserRole.java        # ADMIN, USER
+│       ├── RoomStatus.java      # AVAILABLE, MAINTENANCE
+│       └── BookingStatus.java   # CONFIRMED, CANCELLED, COMPLETED
 ├── dto/
-│   ├── request/    # Objetos de entrada da API
-│   └── response/   # Objetos de saída da API
-├── security/       # JwtService, JwtAuthenticationFilter
-├── exception/      # GlobalExceptionHandler, exceções customizadas
-└── util/           # DateTimeUtil
+│   ├── request/
+│   │   ├── RegisterRequest.java
+│   │   └── LoginRequest.java
+│   └── response/
+│       └── JwtResponse.java
+├── security/
+│   ├── JwtService.java              # Geração e validação de tokens
+│   └── JwtAuthenticationFilter.java # Intercepta requisições e valida JWT
+└── exception/
+    ├── GlobalExceptionHandler.java
+    ├── ResourceNotFoundException.java
+    └── ConflictException.java
 ```
 
 ## Fluxo de uma requisição
