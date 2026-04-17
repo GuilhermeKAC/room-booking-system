@@ -1,5 +1,6 @@
-CREATE TABLE rooms (
-    id                   BIGSERIAL    PRIMARY KEY,
+CREATE TABLE rooms
+(
+    id                   BIGSERIAL PRIMARY KEY,
     name                 VARCHAR(100) NOT NULL,
     capacity             INT          NOT NULL CHECK (capacity > 0),
     location             VARCHAR(255),
@@ -11,5 +12,5 @@ CREATE TABLE rooms (
     updated_at           TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX idx_rooms_status   ON rooms(status);
-CREATE INDEX idx_rooms_capacity ON rooms(capacity);
+CREATE INDEX idx_rooms_status ON rooms (status);
+CREATE INDEX idx_rooms_capacity ON rooms (capacity);
