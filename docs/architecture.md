@@ -21,14 +21,18 @@ com.roombooking/
 │   └── SecurityConfig.java      # Filtros, rotas públicas/ADMIN, CSRF, sessão stateless, 401/403
 ├── controller/
 │   ├── AuthController.java      # POST /api/auth/register, POST /api/auth/login, GET /api/auth/me
-│   └── RoomController.java      # GET /api/rooms, GET /api/rooms/{id}, POST/PUT/DELETE (ADMIN)
+│   ├── RoomController.java      # GET /api/rooms, GET /api/rooms/{id}, POST/PUT/DELETE (ADMIN)
+│   └── BookingController.java   # POST /api/bookings, GET /api/bookings/me, DELETE /api/bookings/{id}
+│                                #   GET /api/rooms/{id}/availability?date=YYYY-MM-DD
 ├── service/
 │   ├── UserService.java         # Registro de usuário, implementa UserDetailsService
-│   └── RoomService.java         # CRUD de salas
+│   ├── RoomService.java         # CRUD de salas
+│   ├── BookingService.java      # Criação, cancelamento e listagem de reservas (@Transactional)
+│   └── AvailabilityService.java # Slots de 30min (08:00–22:00), marca ocupados/livres
 ├── repository/
 │   ├── UserRepository.java
 │   ├── RoomRepository.java
-│   └── BookingRepository.java
+│   └── BookingRepository.java   # findConflictingBookings (JPQL de sobreposição de intervalos)
 ├── model/
 │   ├── User.java
 │   ├── Room.java
@@ -41,10 +45,13 @@ com.roombooking/
 │   ├── request/
 │   │   ├── RegisterRequest.java
 │   │   ├── LoginRequest.java
-│   │   └── RoomRequest.java
+│   │   ├── RoomRequest.java
+│   │   └── BookingRequest.java
 │   └── response/
 │       ├── JwtResponse.java
-│       └── RoomResponse.java    # from(Room) — converte entidade para resposta
+│       ├── RoomResponse.java       # from(Room)
+│       ├── BookingResponse.java    # from(Booking)
+│       └── AvailabilityResponse.java  # slots com available/bookedBy/purpose
 ├── security/
 │   ├── JwtService.java              # Geração e validação de tokens
 │   └── JwtAuthenticationFilter.java # Intercepta requisições e valida JWT
