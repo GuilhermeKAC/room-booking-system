@@ -34,3 +34,6 @@ build/
 
 ### Environment ###
 .env
+
+### Local scripts ###
+test.sh
