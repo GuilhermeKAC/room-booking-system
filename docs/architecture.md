@@ -78,3 +78,18 @@ Cliente
 |---|---|---|
 | `dev` | padrão | Logs detalhados, SQL visível no console |
 | `prod` | `--spring.profiles.active=prod` | Logs limpos |
+| `test` | `@ActiveProfiles("test")` | Banco `room_booking_db_test`, logs reduzidos |
+
+## Testes
+
+| Tipo | Classe | Ferramenta |
+|---|---|---|
+| Unitário | `BookingServiceTest` | JUnit 5 + Mockito (sem banco) |
+| Integração | `AuthControllerTest` | JUnit 5 + MockMvc + `@SpringBootTest` |
+
+Os testes de integração usam `@Transactional` — cada teste faz rollback ao final, sem deixar dados no banco.
+
+## Documentação da API
+
+Swagger UI disponível em `http://localhost:8080/swagger-ui/index.html` (aplicação rodando).
+Gerado automaticamente pelo SpringDoc OpenAPI a partir das anotações dos controllers.
