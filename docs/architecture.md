@@ -17,12 +17,14 @@
 ```
 com.roombooking/
 ├── config/
-│   ├── ApplicationConfig.java   # PasswordEncoder, AuthenticationProvider, AuthenticationManager
-│   └── SecurityConfig.java      # Filtros, rotas públicas, CSRF, sessão stateless
+│   ├── ApplicationConfig.java   # PasswordEncoder
+│   └── SecurityConfig.java      # Filtros, rotas públicas/ADMIN, CSRF, sessão stateless, 401/403
 ├── controller/
-│   └── AuthController.java      # POST /api/auth/register, POST /api/auth/login, GET /api/auth/me
+│   ├── AuthController.java      # POST /api/auth/register, POST /api/auth/login, GET /api/auth/me
+│   └── RoomController.java      # GET /api/rooms, GET /api/rooms/{id}, POST/PUT/DELETE (ADMIN)
 ├── service/
-│   └── UserService.java         # Registro de usuário, implementa UserDetailsService
+│   ├── UserService.java         # Registro de usuário, implementa UserDetailsService
+│   └── RoomService.java         # CRUD de salas
 ├── repository/
 │   ├── UserRepository.java
 │   ├── RoomRepository.java
@@ -38,9 +40,11 @@ com.roombooking/
 ├── dto/
 │   ├── request/
 │   │   ├── RegisterRequest.java
-│   │   └── LoginRequest.java
+│   │   ├── LoginRequest.java
+│   │   └── RoomRequest.java
 │   └── response/
-│       └── JwtResponse.java
+│       ├── JwtResponse.java
+│       └── RoomResponse.java    # from(Room) — converte entidade para resposta
 ├── security/
 │   ├── JwtService.java              # Geração e validação de tokens
 │   └── JwtAuthenticationFilter.java # Intercepta requisições e valida JWT
