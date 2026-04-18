@@ -32,11 +32,20 @@ public class AvailabilityService {
                 room.getId(), dayStart, dayEnd
         );
 
+        boolean isToday = date.equals(LocalDate.now());
+        LocalTime now = LocalTime.now();
+
         List<Slot> slots = new ArrayList<>();
         LocalTime cursor = BUSINESS_START;
 
         while (cursor.plusMinutes(SLOT_MINUTES).compareTo(BUSINESS_END) <= 0) {
             LocalTime slotEnd = cursor.plusMinutes(SLOT_MINUTES);
+
+            if (isToday && !cursor.isAfter(now)) {
+                cursor = slotEnd;
+                continue;
+            }
+
             LocalDateTime slotStart = date.atTime(cursor);
             LocalDateTime slotEndDt = date.atTime(slotEnd);
 
