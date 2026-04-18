@@ -37,3 +37,6 @@ build/
 
 ### Local scripts ###
 test.sh
+
+### Logs ###
+logs/

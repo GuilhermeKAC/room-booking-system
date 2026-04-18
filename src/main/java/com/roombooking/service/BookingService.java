@@ -58,12 +58,14 @@ public class BookingService {
         return bookingRepository.save(booking);
     }
 
+    @Transactional(readOnly = true)
     public List<Booking> findByUser(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found: " + username));
         return bookingRepository.findByUserIdOrderByStartTimeDesc(user.getId());
     }
 
+    @Transactional(readOnly = true)
     public List<Booking> findByRoom(Long roomId) {
         roomService.findById(roomId);
         return bookingRepository.findByRoomIdAndStatus(roomId, BookingStatus.CONFIRMED);
